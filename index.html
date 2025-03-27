@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM数智小工具-1分期</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .question h3 {
+            margin-top: 0;
+        }
+        .question input[type="radio"] {
+            margin-right: 10px;
+        }
+        .nested-question {
+            display: none;
+            margin-top: 10px;
+        }
+        .nested-question.show {
+            display: block;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>MM数智小工具-1分期</h1>
+    <form id="mmForm">
+        <div class="question">
+            <h3>1. 血常规</h3>
+            <label><input type="radio" name="q1" value="a"> a. 血红蛋白水平 > 100 g/L</label><br>
+            <label><input type="radio" name="q1" value="b"> b. 血红蛋白水平 < 85 g/L</label><br>
+            <label><input type="radio" name="q1" value="c"> c. 以上均不符合</label><br>
+            <label><input type="radio" name="q1" value="d"> d. 未做该检查</label>
+        </div>
+        <div class="question">
+            <h3>2. 生化报告</h3>
+            <label><input type="radio" name="q2" value="a"> a. 血清钙(Ca) ≤ 2.65 mmol/L (11.5mg/dL)</label><br>
+            <label><input type="radio" name="q2" value="b"> b. 血清钙(Ca) > 2.65 mmol/L (11.5mg/dL)</label><br>
+            <label><input type="radio" name="q2" value="c"> c. 未做该检查</label>
+        </div>
+        <div class="question">
+            <h3>3. 生化报告肾功</h3>
+            <label><input type="radio" name="q3" value="a"> a. 肌酐清除率 > 40 mL/min 或血清肌酐水平 < 177umo/L (2.0 mg/dL)</label><br>
+            <label><input type="radio" name="q3" value="b"> b. 肌酐清除率 < 40 mL/min 或血清肌酐水平 > 177umol/L (2.0 mg/dL)</label><br>
+            <label><input type="radio" name="q3" value="c"> c. 未做该检查</label>
+        </div>
+        <div class="question">
+            <h3>4. X线、PET、MRI</h3>
+            <label><input type="radio" name="q4" value="a"> a. 骨骼X线: 骨骼结构正常或骨型孤立性浆细胞瘤</label><br>
+            <label><input type="radio" name="q4" value="b"> b. 骨骼检查中溶骨病变 > 3处</label><br>
+            <label><input type="radio" name="q4" value="c"> c. 以上均不符合</label><br>
+            <label><input type="radio" name="q4" value="d"> d. 未做该检查</label>
+        </div>
+        <div class="question">
+            <h3>5. 特殊蛋白检验报告</h3>
+            <div>
+                <label><input type="radio" name="q5" value="a" onchange="toggleNestedQuestion('q5a')"> a. IgG</label>
+                <div id="q5a" class="nested-question">
+                    <label><input type="radio" name="q5a_sub" value="a"> a. IgG < 50g/L</label><br>
+                    <label><input type="radio" name="q5a_sub" value="b"> b. IgG > 70g/L</label><br>
+                    <label><input type="radio" name="q5a_sub" value="c"> c. 以上均不符合</label><br>
+                    <label><input type="radio" name="q5a_sub" value="d"> d. 未做该检查</label>
+                </div>
+            </div>
+            <div>
+                <label><input type="radio" name="q5" value="b" onchange="toggleNestedQuestion('q5b')"> b. IgA</label>
+                <div id="q5b" class="nested-question">
+                    <label><input type="radio" name="q5b_sub" value="a"> a. IgA < 30g/L</label><br>
+                    <label><input type="radio" name="q5b_sub" value="b"> b. IgA > 50g/L</label><br>
+                    <label><input type="radio" name="q5b_sub" value="c"> c. 以上均不符合</label><br>
+                    <label><input type="radio" name="q5b_sub" value="d"> d. 未做该检查</label>
+                </div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>6. 尿常规</h3>
+            <label><input type="radio" name="q6" value="a"> a. 尿本周蛋白Bence Jones < 4g/24h</label><br>
+            <label><input type="radio" name="q6" value="b"> b. 尿本周蛋白Bence Jones > 12g/24h</label><br>
+            <label><input type="radio" name="q6" value="c"> c. 以上均不符合</label><br>
+            <label><input type="radio" name="q6" value="d"> d. 未做该检查</label>
+        </div>
+        <div class="question">
+            <h3>7. B2微球蛋白、生化报告</h3>
+            <label><input type="radio" name="q7" value="a"> a. β2-MG < 3.5mg/L 白蛋白 > 35g/L</label><br>
+            <label><input type="radio" name="q7" value="b"> b. B2-MG > 5.5mg/L</label><br>
+            <label><input type="radio" name="q7" value="c"> c. 以上条件都不满足</label><br>
+            <label><input type="radio" name="q7" value="d"> d. 未做该检查</label>
+        </div>
+        <div class="question">
+            <h3>8. 生化报告</h3>
+            <label><input type="radio" name="q8" value="a"> a. 乳酸脱氢酶(LDH) 箭头朝上</label><br>
+            <label><input type="radio" name="q8" value="b"> b. 乳酸脱氢酶(LDH) 箭头朝下</label><br>
+            <label><input type="radio" name="q8" value="c"> c. 未做该检查</label>
+        </div>
+        <div class="question">
+            <h3>9. 荧光原位杂交(FISH)</h3>
+            <label><input type="radio" name="q9" value="d" onchange="toggleFISHOptions()"> d. 未做该检查</label>
+            <label><input type="radio" name="q9" value="a" onchange="toggleFISHOptions()"> A. 已做该检查</label>
+            <div id="fishtype" class="nested-question" style="display:none;">
+                <p>请选择具体类型：</p>
+                <label><input type="radio" name="q9a" value="a"> a. del (17p)</label><br>
+                <label><input type="radio" name="q9a" value="b"> b. t(4,14)</label><br>
+                <label><input type="radio" name="q9a" value="c"> c. 1q+</label><br>
+                <label><input type="radio" name="q9a" value="d"> d. t(14,16)</label><br>
+                <label><input type="radio" name="q9a" value="e"> e. 以上条件都不满足</label>
+            </div>
+        </div>
+        <button type="button" onclick="calculateScore()">提交</button>
+    </form>
+    <div class="result" id="result"></div>
+
+    <script>
+        function toggleNestedQuestion(id) {
+            const subQuestions = document.querySelectorAll('.nested-question');
+            subQuestions.forEach(subQuestion => {
+                if (subQuestion.id === id) {
+                    subQuestion.classList.toggle('show');
+                } else {
+                    subQuestion.classList.remove('show');
+                }
+            });
+        }
+
+        function toggleFISHOptions() {
+            const fishType = document.getElementById('fishtype');
+            if (fishType.style.display === 'none' || fishType.style.display === '') {
+                fishType.style.display = 'block';
+            } else {
+                fishType.style.display = 'none';
+            }
+        }
+
+        function getScore(value) {
+            switch (value) {
+                case 'a':
+                    return 0.5;
+                case 'b':
+                    return 0.8;
+                case 'c':
+                    return 0.2;
+                case 'd':
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+
+        function calculateScore() {
+            let score = 0;
+
+            // 获取每个问题的选择
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            if (q1) score += getScore(q1.value);
+
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            if (q2) score += getScore(q2.value);
+
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            if (q3) score += getScore(q3.value);
+
+            const q4 = document.querySelector('input[name="q4"]:checked');
+            if (q4) score += getScore(q4.value);
+
+            const q5a_sub = document.querySelector('input[name="q5a_sub"]:checked');
+            if (q5a_sub) score += getScore(q5a_sub.value);
+            const q5b_sub = document.querySelector('input[name="q5b_sub"]:checked');
+            if (q5b_sub) score += getScore(q5b_sub.value);
+
+            const q6 = document.querySelector('input[name="q6"]:checked');
+            if (q6) score += getScore(q6.value);
+
+            const q7 = document.querySelector('input[name="q7"]:checked');
+            if (q7) score += getScore(q7.value);
+
+            const q8 = document.querySelector('input[name="q8"]:checked');
+            if (q8) score += getScore(q8.value);
+
+            const q9 = document.querySelector('input[name="q9"]:checked');
+            if (q9 && q9.value === 'a') {
+                const q9a = document.querySelector('input[name="q9a"]:checked');
+                if (q9a) score += getScore(q9a.value);
+            }
+
+            // 显示结果
+            const resultDiv = document.getElementById('result');
+            if (score >= 0 && score <= 1) {
+                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅰ期     ISS Ⅰ期  R-ISS Ⅰ期   R2-ISSⅠ期`;
+            } else if (score >= 1.5 && score <= 2.5) {
+                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅱ期     ISS Ⅱ期  R-ISS Ⅱ期   R2-ISSⅡ期`;
+            } else if (score >= 3 && score <= 5) {
+                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅲ期     ISS Ⅲ期  R-ISS Ⅲ期   R2-ISSⅢ期`;
+            } else if (score >= 5) {
+                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅳ期     ISS Ⅳ期  R-ISS Ⅳ期   R2-ISSⅣ期`;
+            } else {
+                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>请完成所有检查以获得准确结果`;
+            }
+        }
+    </script>
+</body>
+</html>
