@@ -1,232 +1,724 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MM数智小工具-1分期</title>
+    <title>白血病诊疗助手 - 测试</title>
     <style>
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f9;
-            color: #333;
+            padding: 20px;
+            background-color: #f5f5f5;
         }
-        .question {
+
+       .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .question h3 {
-            margin-top: 0;
-        }
-        .question input[type="radio"] {
-            margin-right: 10px;
-        }
-        .nested-question {
-            display: none;
-            margin-top: 10px;
-        }
-        .nested-question.show {
-            display: block;
-        }
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
+
+       .question-container {
             background-color: #fff;
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-        button {
-            background-color: #007bff;
-            color: #fff;
+
+       .question {
+            margin-bottom: 15px;
+        }
+
+       .question p {
+            margin: 0 0 5px;
+        }
+
+       .nav-button,
+       .submit-button {
+            width: 48%;
+            padding: 12px;
+            font-size: 16px;
             border: none;
-            padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+       .nav-button {
+            background-color: #007BFF;
+            color: white;
+        }
+
+       .nav-button:hover {
+            background-color: #0056b3;
+        }
+
+       .submit-button {
+            background-color: #28a745;
+            color: white;
+            margin-top: 20px;
+        }
+
+       .submit-button:hover {
+            background-color: #218838;
+        }
+
+       .hidden {
+            display: none;
+        }
+
+       .vertical-options {
+            display: flex;
+            flex-direction: column;
+        }
+
+       .vertical-options label {
+            margin-bottom: 10px;
+        }
+
+       .result-box {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+       .result-box.red {
+            color: red;
+            font-weight: bold;
+        }
+
+       .result-box.blue {
+            color: blue;
+            font-weight: bold;
+        }
+
+       .explanation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+       .explanation-table th,
+       .explanation-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+       .explanation-table th {
+            background-color: #f5f5f5;
+        }
+
+       .copyright {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #888;
+        }
+
+       .diagnosis-title {
+            color: black;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+       .result-text {
+            font-size: 1.8em;
+            color: red;
+            font-weight: bold;
+        }
+
+       .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #homepage {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        #homepage h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        #homepage p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        #restart-button {
+            display: block;
+            width: 40%;
+            padding: 12px;
+            font-size: 16px;
+            margin: 20px auto;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+        }
+
+        #restart-button:hover {
+            background-color: #0056b3;
+        }
+
+       .note {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+       .feature {
+            margin-bottom: 20px;
+        }
+
+       .feature h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+       .feature p {
             font-size: 16px;
         }
-        button:hover {
-            background-color: #0056b3;
+
+       .question-container h1 {
+            font-size: 24px;
+            text-align: left;
+        }
+
+       .result-separator {
+            border-bottom: 1px solid #ccc;
+            margin: 10px 0;
         }
     </style>
 </head>
+
 <body>
-    <h1>MM数智小工具-1分期</h1>
-    <form id="mmForm">
-        <div class="question">
-            <h3>1. 血常规</h3>
-            <label><input type="radio" name="q1" value="a"> a. 血红蛋白水平 > 100 g/L</label><br>
-            <label><input type="radio" name="q1" value="b"> b. 血红蛋白水平 < 85 g/L</label><br>
-            <label><input type="radio" name="q1" value="c"> c. 以上均不符合</label><br>
-            <label><input type="radio" name="q1" value="d"> d. 未做该检查</label>
+    <!-- 首页 -->
+    <div class="container" id="homepage">
+        <h1>白血病诊疗助手</h1>
+        <p>本助手基于专业医学知识和临床经验开发，可帮助您进行快速筛查，了解白血病相关情况。</p>
+
+        <div class="feature">
+            <h3>专业精准</h3>
+            <p>依据权威医学指南和专家共识设计问题，确保筛查结果具有较高的参考价值。</p>
         </div>
-        <div class="question">
-            <h3>2. 生化报告</h3>
-            <label><input type="radio" name="q2" value="a"> a. 血清钙(Ca) ≤ 2.65 mmol/L (11.5mg/dL)</label><br>
-            <label><input type="radio" name="q2" value="b"> b. 血清钙(Ca) > 2.65 mmol/L (11.5mg/dL)</label><br>
-            <label><input type="radio" name="q2" value="c"> c. 未做该检查</label>
+
+        <div class="feature">
+            <h3>快速便捷</h3>
+            <p>只需回答几个简单问题，即可在短时间内获得初步的筛查结果，节省您的时间和精力。</p>
         </div>
-        <div class="question">
-            <h3>3. 生化报告肾功</h3>
-            <label><input type="radio" name="q3" value="a"> a. 肌酐清除率 > 40 mL/min 或血清肌酐水平 < 177umo/L (2.0 mg/dL)</label><br>
-            <label><input type="radio" name="q3" value="b"> b. 肌酐清除率 < 40 mL/min 或血清肌酐水平 > 177umol/L (2.0 mg/dL)</label><br>
-            <label><input type="radio" name="q3" value="c"> c. 未做该检查</label>
+
+        <div class="feature">
+            <h3>隐私保护</h3>
+            <p>严格保护您的个人信息和筛查结果，确保您的隐私安全。</p>
         </div>
-        <div class="question">
-            <h3>4. X线、PET、MRI</h3>
-            <label><input type="radio" name="q4" value="a"> a. 骨骼X线: 骨骼结构正常或骨型孤立性浆细胞瘤</label><br>
-            <label><input type="radio" name="q4" value="b"> b. 骨骼检查中溶骨病变 > 3处</label><br>
-            <label><input type="radio" name="q4" value="c"> c. 以上均不符合</label><br>
-            <label><input type="radio" name="q4" value="d"> d. 未做该检查</label>
-        </div>
-        <div class="question">
-            <h3>5. 特殊蛋白检验报告</h3>
-            <div>
-                <label><input type="radio" name="q5" value="a" onchange="toggleNestedQuestion('q5a')"> a. IgG</label>
-                <div id="q5a" class="nested-question">
-                    <label><input type="radio" name="q5a_sub" value="a"> a. IgG < 50g/L</label><br>
-                    <label><input type="radio" name="q5a_sub" value="b"> b. IgG > 70g/L</label><br>
-                    <label><input type="radio" name="q5a_sub" value="c"> c. 以上均不符合</label><br>
-                    <label><input type="radio" name="q5a_sub" value="d"> d. 未做该检查</label>
-                </div>
-            </div>
-            <div>
-                <label><input type="radio" name="q5" value="b" onchange="toggleNestedQuestion('q5b')"> b. IgA</label>
-                <div id="q5b" class="nested-question">
-                    <label><input type="radio" name="q5b_sub" value="a"> a. IgA < 30g/L</label><br>
-                    <label><input type="radio" name="q5b_sub" value="b"> b. IgA > 50g/L</label><br>
-                    <label><input type="radio" name="q5b_sub" value="c"> c. 以上均不符合</label><br>
-                    <label><input type="radio" name="q5b_sub" value="d"> d. 未做该检查</label>
-                </div>
+
+        <button class="submit-button" onclick="startTest()">开始测试</button>
+    </div>
+
+    <div class="container">
+        <!-- 问题1 -->
+        <div class="question-container hidden" id="question1">
+            <h1>1. 既往化疗病史</h1>
+            <label><input type="radio" name="q1" value="A"> A. 无</label>
+            <label><input type="radio" name="q1" value="B"> B. 有</label>
+            <div class="button-container">
+                <button type="button" class="nav-button" style="display: none;">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(1)">下一题</button>
             </div>
         </div>
-        <div class="question">
-            <h3>6. 尿常规</h3>
-            <label><input type="radio" name="q6" value="a"> a. 尿本周蛋白Bence Jones < 4g/24h</label><br>
-            <label><input type="radio" name="q6" value="b"> b. 尿本周蛋白Bence Jones > 12g/24h</label><br>
-            <label><input type="radio" name="q6" value="c"> c. 以上均不符合</label><br>
-            <label><input type="radio" name="q6" value="d"> d. 未做该检查</label>
-        </div>
-        <div class="question">
-            <h3>7. B2微球蛋白、生化报告</h3>
-            <label><input type="radio" name="q7" value="a"> a. β2-MG < 3.5mg/L 白蛋白 > 35g/L</label><br>
-            <label><input type="radio" name="q7" value="b"> b. B2-MG > 5.5mg/L</label><br>
-            <label><input type="radio" name="q7" value="c"> c. 以上条件都不满足</label><br>
-            <label><input type="radio" name="q7" value="d"> d. 未做该检查</label>
-        </div>
-        <div class="question">
-            <h3>8. 生化报告</h3>
-            <label><input type="radio" name="q8" value="a"> a. 乳酸脱氢酶(LDH) 箭头朝上</label><br>
-            <label><input type="radio" name="q8" value="b"> b. 乳酸脱氢酶(LDH) 箭头朝下</label><br>
-            <label><input type="radio" name="q8" value="c"> c. 未做该检查</label>
-        </div>
-        <div class="question">
-            <h3>9. 荧光原位杂交(FISH)</h3>
-            <label><input type="radio" name="q9" value="d" onchange="toggleFISHOptions()"> d. 未做该检查</label>
-            <label><input type="radio" name="q9" value="a" onchange="toggleFISHOptions()"> A. 已做该检查</label>
-            <div id="fishtype" class="nested-question" style="display:none;">
-                <p>请选择具体类型：</p>
-                <label><input type="radio" name="q9a" value="a"> a. del (17p)</label><br>
-                <label><input type="radio" name="q9a" value="b"> b. t(4,14)</label><br>
-                <label><input type="radio" name="q9a" value="c"> c. 1q+</label><br>
-                <label><input type="radio" name="q9a" value="d"> d. t(14,16)</label><br>
-                <label><input type="radio" name="q9a" value="e"> e. 以上条件都不满足</label>
+
+        <!-- 问题2 -->
+        <div class="question-container hidden" id="question2">
+            <h1>2. 白细胞计数</h1>
+            <label><input type="radio" name="q2" value="A"> A. ＜10×10^9/L</label>
+            <label><input type="radio" name="q2" value="B"> B. ≥10 - 100×10^9/L</label>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(2)">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(2)">下一题</button>
             </div>
         </div>
-        <button type="button" onclick="calculateScore()">提交</button>
-    </form>
-    <div class="result" id="result"></div>
+
+        <!-- 问题3 -->
+        <div class="question-container hidden" id="question3">
+            <h1>3. 是否伴骨髓增生异常相关</h1>
+            <label><input type="radio" name="q3" value="A"> A. MDS或MDS/MPN病史</label>
+            <div class="vertical-options">
+                <label><input type="checkbox" name="q3a" value="a" onchange="handleQ3SubOptions()"> a. 伴MDS相关的核型异常</label>
+                <label><input type="checkbox" name="q3b" value="b" onchange="handleQ3SubOptions()"> b. 伴MDS相关的基因突变</label>
+            </div>
+            <label><input type="radio" name="q3" value="B" onchange="handleQ3OptionB()"> B. 无</label>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(3)">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(3)">下一题</button>
+            </div>
+        </div>
+
+        <!-- 问题4 -->
+        <div class="question-container hidden" id="question4">
+            <h1>4. 外周血或骨髓原始细胞比例</h1>
+            <label><input type="radio" name="q4" value="A"> A. 无</label>
+            <label><input type="radio" name="q4" value="B"> B. ＜20%</label>
+            <label><input type="radio" name="q4" value="C"> C. ≥20%</label>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(4)">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(4)">下一题</button>
+            </div>
+        </div>
+
+        <!-- 问题5 -->
+        <div class="question-container hidden" id="question5">
+            <h1>5. 骨髓流式是否存在单克隆细胞</h1>
+            <label><input type="radio" name="q5" value="A"> A. 无</label>
+            <label><input type="radio" name="q5" value="B"> B. 存在髓系单克隆细胞</label>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(5)">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(5)">下一题</button>
+            </div>
+        </div>
+
+        <!-- 问题6 -->
+        <div class="question-container hidden" id="question6">
+            <h1>6. 是否伴有以下遗传学异常</h1>
+            <div class="vertical-options">
+                <label><input type="radio" name="q6" value="A"> A. PML::RARA</label>
+                <label><input type="radio" name="q6" value="B"> B. RUNX1::RUNX1T1</label>
+                <label><input type="radio" name="q6" value="C"> C. CBFB::MYH11</label>
+                <label><input type="radio" name="q6" value="D"> D. DEK::NUP214</label>
+                <label><input type="radio" name="q6" value="E"> E. RBM15::MRTFA</label>
+                <label><input type="radio" name="q6" value="F"> F. BCR::ABL1</label>
+                <label><input type="radio" name="q6" value="G"> G. KMT2A基因重排</label>
+                <label><input type="radio" name="q6" value="H"> H. MECOM基因重排</label>
+                <label><input type="radio" name="q6" value="I"> I. NUP98基因重排</label>
+                <label><input type="radio" name="q6" value="J"> J. NPM1突变</label>
+                <label><input type="radio" name="q6" value="K"> K. CEBPA突变（包括biCEBPA和smbZipCEBPA突变）</label>
+                <label><input type="radio" name="q6" value="L"> L. 伴以下遗传学异常（ASXL1,NRAS,PTPN11,SETBP1,SRSF2,TP53,U2AF1）</label>
+                <label><input type="radio" name="q6" value="M"> M. 无</label>
+            </div>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(6)">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(6)">下一题</button>
+            </div>
+        </div>
+
+        <!-- 问题7 -->
+        <div class="question-container hidden" id="question7">
+            <h1>7. 是否伴有一下情况（F不参与多选）</h1>
+            <div class="vertical-options">
+                <label><input type="checkbox" name="q7a" value="A" onchange="handleQ7Selection()"> A. 年龄≥60岁</label>
+                <label><input type="checkbox" name="q7b" value="B" onchange="handleQ7Selection()"> B. WBC≥100×10^9/L</label>
+                <label><input type="checkbox" name="q7c" value="C" onchange="handleQ7Selection()"> C. AML的发病是继发于其他疾病或治疗</label>
+                <label><input type="checkbox" name="q7d" value="D" onchange="handleQ7Selection()"> D. 合并中枢神经系统白血病</label>
+                <label><input type="checkbox" name="q7e" value="E" onchange="handleQ7Selection()"> E. 病变累及肝、脾、淋巴结等骨髓外组织</label>
+                <label><input type="checkbox" name="q7f" value="F" onchange="handleQ7Selection()"> F. 以上均无</label>
+            </div>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(7)">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(7)">下一题</button>
+            </div>
+        </div>
+
+        <!-- 问题8 -->
+        <div class="question-container hidden" id="question8">
+            <h1>8. 是否伴有以下异常</h1>
+            <div class="vertical-options">
+                <label><input type="radio" name="q8" value="A" onchange="handleQ8Selection()"> A. t(6;9)(p23;q34.1)/DEK::NUP214</label>
+                <label><input type="radio" name="q8" value="B" onchange="handleQ8Selection()"> B. t(v:11q23.3)/KMT2A重排</label>
+                <label><input type="radio" name="q8" value="C" onchange="handleQ8Selection()"> C. t(9;22)(q34.1;q11.2)/BCR::ABL1</label>
+                <label><input type="radio" name="q8" value="D" onchange="handleQ8Selection()"> D. t(8;16)(p11;p13)/KAT6A::CREBBP</label>
+                <label><input type="radio" name="q8" value="E" onchange="handleQ8Selection()"> E. inv(3)(q21.3q26.2)或t(3;3)q21.3;q26.2)/GATA2,MECOM(EVI1)</label>
+                <label><input type="radio" name="q8" value="F" onchange="handleQ8Selection()"> F. t(3q26.2;v)/MECOM(EVI1)重排</label>
+                <label><input type="radio" name="q8" value="G" onchange="handleQ8Selection()"> G. -5或del(5q)</label>
+                <label><input type="radio" name="q8" value="H" onchange="handleQ8Selection()"> H. -7;-17/abn(17p)</label>
+                <label><input type="radio" name="q8" value="I" onchange="handleQ8Selection()"> I. 复杂核型，单体核型</label>
+                <label><input type="radio" name="q8" value="J" onchange="handleQ8Selection()"> J. TP53突变</label>
+                <label><input type="radio" name="q8" value="K" onchange="handleQ8Selection()"> K. 以上均无</label>
+            </div>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(8)">上一题</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(8)">下一题</button>
+            </div>
+        </div>
+
+        <!-- 问题9 -->
+        <div class="question-container hidden" id="question9">
+            <h1>9. 是否伴有以下异常</h1>
+            <div class="vertical-options">
+                <label><input type="checkbox" name="q9a" value="A"> A. inv(16)(p13q22)或t(16;16)(p13;q22)/CBFB::MYH11</label>
+                <label><input type="checkbox" name="q9b" value="B"> B. t(8;21)(q22;q22)/RUNX1::RUNX1T1</label>
+                <label><input type="checkbox" name="q9c" value="C"> C. Bzip区域框内CEBPA突变</label>
+                <label><input type="checkbox" name="q9d" value="D"> D. NPM1突变且不伴有FLT3-ITD突变</label>
+                <label><input type="checkbox" name="q9e" value="E"> E. NPM1突变伴FLT3-ITD突变</label>
+                <label><input type="checkbox" name="q9f" value="F"> F. NPM1野生型伴FLT3-ITD突变</label>
+                <label><input type="checkbox" name="q9g" value="G"> G. t(9;11)(p21.3;q23.3)/MLLT3::KMT2A</label>
+                <label><input type="checkbox" name="q9h" value="H"> H. 除外以上的其他细胞遗传学和分子学异常</label>
+            </div>
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevQuestion(9)">上一题</button>
+                <button type="button" class="submit-button" onclick="nextQuestion(9)">提交</button>
+            </div>
+        </div>
+
+        <!-- 结果页面 -->
+        <div class="question-container hidden" id="resultPage">
+            <div class="result-box" id="resultBox"></div>
+            <p class="note">此诊断结果仅供参考，具体以医生诊断结果为准</p>
+            <table class="explanation-table">
+                <thead>
+                    <tr>
+                        <th>诊断结果</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody id="explanationBody">
+                </tbody>
+            </table>
+            <button id="restart-button" onclick="restartTest()">重新测试</button>
+            <p class="copyright">版权归属：宁夏人民医院血液科</p>
+        </div>
+    </div>
 
     <script>
-        function toggleNestedQuestion(id) {
-            const subQuestions = document.querySelectorAll('.nested-question');
-            subQuestions.forEach(subQuestion => {
-                if (subQuestion.id === id) {
-                    subQuestion.classList.toggle('show');
-                } else {
-                    subQuestion.classList.remove('show');
-                }
+        // 存储用户答案
+        let answers = {};
+        // 存储第6题初步诊断结果
+        let q6Diagnosis = '';
+
+        // 显示指定问题
+        function showQuestion(questionId) {
+            document.querySelectorAll('.question-container').forEach(container => {
+                container.classList.add('hidden');
             });
+            document.getElementById(questionId).classList.remove('hidden');
         }
 
-        function toggleFISHOptions() {
-            const fishType = document.getElementById('fishtype');
-            if (fishType.style.display === 'none' || fishType.style.display === '') {
-                fishType.style.display = 'block';
-            } else {
-                fishType.style.display = 'none';
+        // 检查是否作答
+        function checkAnswer(currentQuestion) {
+            const questionKey = `q${currentQuestion}`;
+            if (currentQuestion === 3) {
+                if (!answers[questionKey] &&!document.querySelector('input[name="q3"]:checked')) {
+                    alert(`请先回答第${currentQuestion}题！`);
+                    return false;
+                }
+            } else if (currentQuestion === 7) {
+                const q7Options = document.querySelectorAll('input[name^="q7"]:checked');
+                if (q7Options.length === 0) {
+                    alert(`请先回答第${currentQuestion}题！`);
+                    return false;
+                }
+            } else if (currentQuestion === 9) {
+                const q9Options = document.querySelectorAll('input[name^="q9"]:checked');
+                if (q9Options.length === 0) {
+                    alert(`请先回答第${currentQuestion}题！`);
+                    return false;
+                }
+            } else if (!answers[questionKey] &&!document.querySelector(`input[name="${questionKey}"]:checked`)) {
+                alert(`请先回答第${currentQuestion}题！`);
+                return false;
+            }
+            return true;
+        }
+
+        // 处理第3题子选项逻辑
+        function handleQ3SubOptions() {
+            const q3a = document.querySelector('input[name="q3a"]');
+            const q3b = document.querySelector('input[name="q3b"]');
+            const q3A = document.querySelector('input[name="q3"][value="A"]');
+
+            if (q3a.checked || q3b.checked) {
+                q3A.checked = true;
             }
         }
 
-        function getScore(value) {
-            switch (value) {
-                case 'a':
-                    return 0.5;
-                case 'b':
-                    return 0.8;
-                case 'c':
-                    return 0.2;
-                case 'd':
-                    return 0;
+        // 处理第3题选择B项逻辑
+        function handleQ3OptionB() {
+            const q3a = document.querySelector('input[name="q3a"]');
+            const q3b = document.querySelector('input[name="q3b"]');
+            q3a.checked = false;
+            q3b.checked = false;
+        }
+
+        // 处理第7题选项互斥逻辑
+        function handleQ7Selection() {
+            const q7f = document.querySelector('input[name="q7f"]');
+            const otherOptions = document.querySelectorAll('input[name^="q7"]:not([name="q7f"])');
+
+            if (q7f.checked) {
+                otherOptions.forEach(option => option.checked = false);
+            } else {
+                const anyOtherChecked = Array.from(otherOptions).some(option => option.checked);
+                if (anyOtherChecked) {
+                    q7f.checked = false;
+                }
+            }
+        }
+
+        // 处理第8题选择逻辑
+        function handleQ8Selection() {
+            answers.q8 = document.querySelector('input[name="q8"]:checked').value;
+            // 如果第8题用户选择ABCDEFGHIJ选项中的任何一项或多项,诊断结果判定结果为：预后不良组
+            if (answers.q8!== 'K') {
+                const combinedDiagnosis = `${q6Diagnosis}<br>预后不良组`;
+                showResult(combinedDiagnosis, 'red');
+            }
+        }
+
+        // 下一题逻辑
+        function nextQuestion(currentQuestion) {
+            const questionKey = `q${currentQuestion}`;
+
+            // 检查是否作答
+            if (!checkAnswer(currentQuestion)) {
+                return;
+            }
+
+            // 收集答案
+            if (currentQuestion === 1) {
+                answers.q1 = document.querySelector('input[name="q1"]:checked').value;
+            } else if (currentQuestion === 2) {
+                answers.q2 = document.querySelector('input[name="q2"]:checked').value;
+            } else if (currentQuestion === 3) {
+                answers.q3 = document.querySelector('input[name="q3"]:checked').value;
+                answers.q3a = document.querySelector('input[name="q3a"]').checked? 'a' : null;
+                answers.q3b = document.querySelector('input[name="q3b"]').checked? 'b' : null;
+            } else if (currentQuestion === 4) {
+                answers.q4 = document.querySelector('input[name="q4"]:checked').value;
+
+                // 如果第3题用户选择a或b、或者a、b都选，第4题选A,直接输出诊断结果”MDS“
+                if ((answers.q3a || answers.q3b) && answers.q4 === 'A') {
+                    showResult('MDS', 'blue');
+                    return;
+                }
+                // 如果第3题用户选择a或b、或者a、b都选，第4题选C,直接输出诊断结果”骨髓增生异常相关AML（预后不良组）“
+                if ((answers.q3a || answers.q3b) && answers.q4 === 'C') {
+                    showResult('骨髓增生异常相关AML（预后不良组）', 'blue');
+                    return;
+                }
+            } else if (currentQuestion === 5) {
+                answers.q5 = document.querySelector('input[name="q5"]:checked').value;
+
+                // 判定 3题4题5题是否都选择”无“，如果是直接转跳到诊疗结果页面，显示诊断结果“无白血病”
+                if (answers.q3 === 'B' && answers.q4 === 'A' && answers.q5 === 'A') {
+                    showResult('无白血病', 'blue');
+                    return;
+                }
+            } else if (currentQuestion === 6) {
+                answers.q6 = document.querySelector('input[name="q6"]:checked').value;
+
+                // 处理第6题的不同选择
+                switch (answers.q6) {
+                    case 'A':
+                        if (answers.q2 === 'B') {
+                            showResult('APL伴PML::RARA融合基因（<span style="color:blue">高危</span>）', 'blue');
+                            return;
+                        } else if (answers.q2 === 'A') {
+                            showResult('APL伴PML::RARA融合基因（<span style="color:blue">低危</span>）', 'blue');
+                            return;
+                        } else {
+                            q6Diagnosis = 'APL伴PML::RARA融合基因';
+                        }
+                        break;
+                    case 'B':
+                        q6Diagnosis = 'RUNX1::RUNX1T1融合基因';
+                        break;
+                    case 'C':
+                        q6Diagnosis = 'AML伴CBFB::MYH11融合基因';
+                        break;
+                    case 'D':
+                        q6Diagnosis = 'AML伴DEK::NUP214融合基因';
+                        break;
+                    case 'E':
+                        q6Diagnosis = 'AML伴RBM15::MRTFA融合基因';
+                        break;
+                    case 'F':
+                        if (answers.q4 === 'C') {
+                            q6Diagnosis = 'AML伴BCR::ABL1融合基因';
+                        } else {
+                            q6Diagnosis = 'BCR::ABL1融合基因';
+                        }
+                        break;
+                    case 'G':
+                        q6Diagnosis = 'AML伴KMT2A重排';
+                        break;
+                    case 'H':
+                        q6Diagnosis = 'AML伴MECOM重排';
+                        break;
+                    case 'I':
+                        q6Diagnosis = 'AML伴NUP98重排';
+                        break;
+                    case 'J':
+                        q6Diagnosis = 'AML伴NPM1突变';
+                        break;
+                    case 'K':
+                        q6Diagnosis = 'AML伴CEBPA突变';
+                        break;
+                    case 'L':
+                        q6Diagnosis = 'AML伴其他特定的遗传学改变';
+                        break;
+                    case 'M':
+                        if (answers.q3 === 'B') {
+                            showResult('建议进一步诊断', 'blue');
+                            return;
+                        }
+                        break;
+                }
+            } else if (currentQuestion === 7) {
+                answers.q7 = Array.from(document.querySelectorAll('input[name^="q7"]:checked')).map(input => input.value);
+
+                // 如果7题选择ABCDE任何一项或多项，输出结果为：预后不良组
+                if (answers.q7.some(option => ['A', 'B', 'C', 'D', 'E'].includes(option))) {
+                    const combinedDiagnosis = `${q6Diagnosis}<br>预后不良组`;
+                    showResult(combinedDiagnosis, 'red');
+                    return;
+                } 
+                // 如果选择F，进入下一题
+                if (answers.q7.includes('F')) {
+                    showQuestion('question8');
+                    return;
+                }
+            } else if (currentQuestion === 8) {
+                answers.q8 = document.querySelector('input[name="q8"]:checked')?.value || 'K';
+
+                // 如果第8题用户选择ABCDEFGHIJ选项中的任何一项或多项,诊断结果判定结果为：预后不良组
+                if (answers.q8!== 'K') {
+                    const combinedDiagnosis = `${q6Diagnosis}<br>预后不良组`;
+                    showResult(combinedDiagnosis, 'red');
+                    return;
+                }
+            } else if (currentQuestion === 9) {
+                answers.q9 = Array.from(document.querySelectorAll('input[name^="q9"]:checked')).map(input => input.value);
+
+                // 根据第9题的选择输出不同的诊断结果
+                const abcdSelected = answers.q9.some(option => ['A', 'B', 'C', 'D'].includes(option));
+                const efgSelected = answers.q9.some(option => ['E', 'F', 'G'].includes(option));
+                const hSelected = answers.q9.includes('H');
+
+                let finalDiagnosis = q6Diagnosis;
+                if (abcdSelected &&!efgSelected &&!hSelected) {
+                    finalDiagnosis += '<br>预后良好组';
+                } else if (efgSelected || hSelected) {
+                    finalDiagnosis += '<br>预后中等组';
+                }
+
+                showResult(finalDiagnosis, 'red');
+                return;
+            }
+
+            // 默认跳转到下一题
+            const nextQuestionId = `question${parseInt(currentQuestion) + 1}`;
+            if (document.getElementById(nextQuestionId)) {
+                showQuestion(nextQuestionId);
+            } else {
+                showQuestion('resultPage');
+            }
+        }
+
+        // 上一题逻辑
+        function prevQuestion(currentQuestion) {
+            const prevQuestionId = `question${parseInt(currentQuestion) - 1}`;
+            if (document.getElementById(prevQuestionId)) {
+                showQuestion(prevQuestionId);
+            }
+        }
+
+        // 显示结果
+        function showResult(diagnosis, color = null) {
+            const resultBox = document.getElementById('resultBox');
+            resultBox.innerHTML = '';
+
+            // 添加诊断结果字段
+            const titleElement = document.createElement('div');
+            titleElement.className = 'diagnosis-title';
+            titleElement.textContent = '诊断结果';
+            resultBox.appendChild(titleElement);
+
+            // 添加横线，调整到黑色文字诊断结果和红色诊断结果中间
+            const separator = document.createElement('div');
+            separator.className = 'result-separator';
+            resultBox.appendChild(separator);
+
+            const resultText = document.createElement('p');
+            resultText.className = `result-text ${color? `result-${color.replace(' ', '')}` : ''}`;
+            resultText.innerHTML = diagnosis;
+            resultBox.appendChild(resultText);
+
+            // 添加到解释表格
+            const explanationBody = document.getElementById('explanationBody');
+            const row = document.createElement('tr');
+            const diagnosisCell = document.createElement('td');
+            const explanationCell = document.createElement('td');
+            diagnosisCell.textContent = diagnosis.replace('<br>', ' ').replace(/<[^>]*>/g, '');
+
+            // 根据诊断结果给出相应说明
+            let explanation = '';
+            switch (diagnosisCell.textContent) {
+                case 'MDS':
+                    explanation = '骨髓增生异常综合征，造血干细胞增殖分化异常，有向白血病转化风险。';
+                    break;
+                case '骨髓增生异常相关AML（预后不良组）':
+                    explanation = '与MDS相关的AML，有MDS病史或相关异常，预后较差。';
+                    break;
+                case '无白血病':
+                    explanation = '当前结果显示无白血病迹象，但仍需结合临床。';
+                    break;
+                case '建议进一步诊断':
+                    explanation = '现有信息不足，需进一步检查明确病情。';
+                    break;
+                case '预后良好组':
+                    explanation = '病情相对乐观，治疗效果可能较好，但仍需积极治疗和定期复查。';
+                    break;
+                case '预后中等组':
+                    explanation = '病情处于中等水平，需要密切关注病情变化，积极配合治疗。';
+                    break;
+                case '预后不良组':
+                    explanation = '病情较为严重，治疗难度较大，预后可能不太理想，需制定个性化治疗方案。';
+                    break;
                 default:
-                    return 0;
+                    explanation = '相关疾病需及时就医，遵医嘱治疗。';
             }
+
+            explanationCell.textContent = explanation;
+            row.appendChild(diagnosisCell);
+            row.appendChild(explanationCell);
+            explanationBody.appendChild(row);
+
+            showQuestion('resultPage');
         }
 
-        function calculateScore() {
-            let score = 0;
-
-            // 获取每个问题的选择
-            const q1 = document.querySelector('input[name="q1"]:checked');
-            if (q1) score += getScore(q1.value);
-
-            const q2 = document.querySelector('input[name="q2"]:checked');
-            if (q2) score += getScore(q2.value);
-
-            const q3 = document.querySelector('input[name="q3"]:checked');
-            if (q3) score += getScore(q3.value);
-
-            const q4 = document.querySelector('input[name="q4"]:checked');
-            if (q4) score += getScore(q4.value);
-
-            const q5a_sub = document.querySelector('input[name="q5a_sub"]:checked');
-            if (q5a_sub) score += getScore(q5a_sub.value);
-            const q5b_sub = document.querySelector('input[name="q5b_sub"]:checked');
-            if (q5b_sub) score += getScore(q5b_sub.value);
-
-            const q6 = document.querySelector('input[name="q6"]:checked');
-            if (q6) score += getScore(q6.value);
-
-            const q7 = document.querySelector('input[name="q7"]:checked');
-            if (q7) score += getScore(q7.value);
-
-            const q8 = document.querySelector('input[name="q8"]:checked');
-            if (q8) score += getScore(q8.value);
-
-            const q9 = document.querySelector('input[name="q9"]:checked');
-            if (q9 && q9.value === 'a') {
-                const q9a = document.querySelector('input[name="q9a"]:checked');
-                if (q9a) score += getScore(q9a.value);
-            }
-
-            // 显示结果
-            const resultDiv = document.getElementById('result');
-            if (score >= 0 && score <= 1) {
-                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅰ期     ISS Ⅰ期  R-ISS Ⅰ期   R2-ISSⅠ期`;
-            } else if (score >= 1.5 && score <= 2.5) {
-                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅱ期     ISS Ⅱ期  R-ISS Ⅱ期   R2-ISSⅡ期`;
-            } else if (score >= 3 && score <= 5) {
-                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅲ期     ISS Ⅲ期  R-ISS Ⅲ期   R2-ISSⅢ期`;
-            } else if (score >= 5) {
-                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>DS Ⅳ期     ISS Ⅳ期  R-ISS Ⅳ期   R2-ISSⅣ期`;
-            } else {
-                resultDiv.innerHTML = `评分: ${score.toFixed(2)}<br>结果为：<br>请完成所有检查以获得准确结果`;
-            }
+        // 开始测试
+        function startTest() {
+            document.getElementById('homepage').classList.add('hidden');
+            showQuestion('question1');
         }
-    </script>
-</body>
-</html>
+
+        // 重新测试
+        function restartTest() {
+            answers = {};
+            q6Diagnosis = '';
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            document.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
+            document.getElementById('resultBox').innerHTML = '';
+            document.getElementById('explanationBody').innerHTML = '';
+            showQuestion('homepage');
+        }
+
+        // 初始化页面
+        function init() {
+            showQuestion('homepage');
+        }
+
+        // 页面加载时初始化
