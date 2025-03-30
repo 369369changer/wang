@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>白血病诊疗助手 - 测试</title>
+    <title>初诊白血病诊断数智小工具</title>
     <style>
         body {
             margin: 0;
@@ -13,9 +13,10 @@
             background-color: #f5f5f5;
         }
 
-       .container {
+        .container {
             max-width: 600px;
             margin: 0 auto;
+            padding: 0;
         }
 
         h1 {
@@ -23,24 +24,22 @@
             margin-bottom: 20px;
         }
 
-       .question-container {
+        .question-container {
             background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 25px;
             margin-bottom: 20px;
         }
 
-       .question {
-            margin-bottom: 15px;
+        .question {
+            margin-bottom: 25px;
         }
 
-       .question p {
+        .question p {
             margin: 0 0 5px;
         }
 
-       .nav-button,
-       .submit-button {
+        .nav-button,
+        .submit-button {
             width: 48%;
             padding: 12px;
             font-size: 16px;
@@ -50,98 +49,98 @@
             transition: background-color 0.3s ease;
         }
 
-       .nav-button {
+        .nav-button {
             background-color: #007BFF;
             color: white;
         }
 
-       .nav-button:hover {
+        .nav-button:hover {
             background-color: #0056b3;
         }
 
-       .submit-button {
-            background-color: #28a745;
+        .submit-button {
+            background-color: #007BFF;
             color: white;
-            margin-top: 20px;
         }
 
-       .submit-button:hover {
-            background-color: #218838;
+        .submit-button:hover {
+            background-color: #0056b3;
         }
 
-       .hidden {
+        .hidden {
             display: none;
         }
 
-       .vertical-options {
+        .vertical-options {
             display: flex;
             flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
         }
 
-       .vertical-options label {
-            margin-bottom: 10px;
+        .vertical-options label {
+            padding: 8px 0;
         }
 
-       .result-box {
-            border: 1px solid #ccc;
-            border-radius: 8px;
+        .result-box {
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             background-color: #fff;
             text-align: center;
             margin-top: 20px;
         }
 
-       .result-box.red {
+        .result-box.red {
             color: red;
             font-weight: bold;
         }
 
-       .result-box.blue {
+        .result-box.blue {
             color: blue;
             font-weight: bold;
         }
 
-       .explanation-table {
+        .explanation-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-       .explanation-table th,
-       .explanation-table td {
+        .explanation-table th,
+        .explanation-table td {
             border: 1px solid #ccc;
             padding: 10px;
             text-align: left;
         }
 
-       .explanation-table th {
+        .explanation-table th {
             background-color: #f5f5f5;
         }
 
-       .copyright {
+        .copyright {
             text-align: center;
             margin-top: 40px;
             font-size: 12px;
             color: #888;
         }
 
-       .diagnosis-title {
+        .diagnosis-title {
             color: black;
             font-size: 1.5em;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
-       .result-text {
+        .result-text {
             font-size: 1.8em;
             color: red;
             font-weight: bold;
+            margin-top: 10px;
         }
 
-       .button-container {
+        .button-container {
             display: flex;
             justify-content: space-between;
+            margin-top: 30px;
         }
 
         #homepage {
@@ -161,47 +160,50 @@
 
         #restart-button {
             display: block;
-            width: 40%;
+            width: 48%;
             padding: 12px;
             font-size: 16px;
             margin: 20px auto;
             background-color: #007BFF;
             color: white;
             text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         #restart-button:hover {
             background-color: #0056b3;
         }
 
-       .note {
+        .note {
             font-size: 12px;
             color: #888;
             text-align: center;
             margin-top: 10px;
         }
 
-       .feature {
+        .feature {
             margin-bottom: 20px;
         }
 
-       .feature h3 {
+        .feature h3 {
             font-size: 20px;
             margin-bottom: 10px;
         }
 
-       .feature p {
+        .feature p {
             font-size: 16px;
         }
 
-       .question-container h1 {
+        .question-container h1 {
             font-size: 24px;
             text-align: left;
         }
 
-       .result-separator {
+        .result-separator {
             border-bottom: 1px solid #ccc;
-            margin: 10px 0;
+            margin: 15px 0;
         }
     </style>
 </head>
@@ -209,7 +211,7 @@
 <body>
     <!-- 首页 -->
     <div class="container" id="homepage">
-        <h1>白血病诊疗助手</h1>
+        <h1>初诊白血病诊断数智小工具</h1>
         <p>本助手基于专业医学知识和临床经验开发，可帮助您进行快速筛查，了解白血病相关情况。</p>
 
         <div class="feature">
@@ -233,9 +235,11 @@
     <div class="container">
         <!-- 问题1 -->
         <div class="question-container hidden" id="question1">
-            <h1>1. 既往化疗病史</h1>
-            <label><input type="radio" name="q1" value="A"> A. 无</label>
-            <label><input type="radio" name="q1" value="B"> B. 有</label>
+            <h1>1. 既往化疗病史？</h1>
+            <div class="vertical-options">
+                <label><input type="radio" name="q1" value="A"> A. 无</label>
+                <label><input type="radio" name="q1" value="B"> B. 有</label>
+            </div>
             <div class="button-container">
                 <button type="button" class="nav-button" style="display: none;">上一题</button>
                 <button type="button" class="nav-button" onclick="nextQuestion(1)">下一题</button>
@@ -244,9 +248,11 @@
 
         <!-- 问题2 -->
         <div class="question-container hidden" id="question2">
-            <h1>2. 白细胞计数</h1>
-            <label><input type="radio" name="q2" value="A"> A. ＜10×10^9/L</label>
-            <label><input type="radio" name="q2" value="B"> B. ≥10 - 100×10^9/L</label>
+            <h1>2. 白细胞计数？</h1>
+            <div class="vertical-options">
+                <label><input type="radio" name="q2" value="A"> A. ＜10×10^9/L</label>
+                <label><input type="radio" name="q2" value="B"> B. ≥10 - 100×10^9/L</label>
+            </div>
             <div class="button-container">
                 <button type="button" class="nav-button" onclick="prevQuestion(2)">上一题</button>
                 <button type="button" class="nav-button" onclick="nextQuestion(2)">下一题</button>
@@ -255,13 +261,15 @@
 
         <!-- 问题3 -->
         <div class="question-container hidden" id="question3">
-            <h1>3. 是否伴骨髓增生异常相关</h1>
-            <label><input type="radio" name="q3" value="A"> A. MDS或MDS/MPN病史</label>
+            <h1>3. 是否伴骨髓增生异常相关？</h1>
             <div class="vertical-options">
-                <label><input type="checkbox" name="q3a" value="a" onchange="handleQ3SubOptions()"> a. 伴MDS相关的核型异常</label>
-                <label><input type="checkbox" name="q3b" value="b" onchange="handleQ3SubOptions()"> b. 伴MDS相关的基因突变</label>
+                <label><input type="radio" name="q3" value="A"> A. MDS或MDS/MPN病史</label>
+                <div style="margin-left: 20px;">
+                    <label><input type="checkbox" name="q3a" value="a" onchange="handleQ3SubOptions()"> a. 伴MDS相关的核型异常</label>
+                    <label><input type="checkbox" name="q3b" value="b" onchange="handleQ3SubOptions()"> b. 伴MDS相关的基因突变</label>
+                </div>
+                <label><input type="radio" name="q3" value="B" onchange="handleQ3OptionB()"> B. 无</label>
             </div>
-            <label><input type="radio" name="q3" value="B" onchange="handleQ3OptionB()"> B. 无</label>
             <div class="button-container">
                 <button type="button" class="nav-button" onclick="prevQuestion(3)">上一题</button>
                 <button type="button" class="nav-button" onclick="nextQuestion(3)">下一题</button>
@@ -270,10 +278,12 @@
 
         <!-- 问题4 -->
         <div class="question-container hidden" id="question4">
-            <h1>4. 外周血或骨髓原始细胞比例</h1>
-            <label><input type="radio" name="q4" value="A"> A. 无</label>
-            <label><input type="radio" name="q4" value="B"> B. ＜20%</label>
-            <label><input type="radio" name="q4" value="C"> C. ≥20%</label>
+            <h1>4. 外周血或骨髓原始细胞比例？</h1>
+            <div class="vertical-options">
+                <label><input type="radio" name="q4" value="A"> A. 无</label>
+                <label><input type="radio" name="q4" value="B"> B. ＜20%</label>
+                <label><input type="radio" name="q4" value="C"> C. ≥20%</label>
+            </div>
             <div class="button-container">
                 <button type="button" class="nav-button" onclick="prevQuestion(4)">上一题</button>
                 <button type="button" class="nav-button" onclick="nextQuestion(4)">下一题</button>
@@ -282,9 +292,11 @@
 
         <!-- 问题5 -->
         <div class="question-container hidden" id="question5">
-            <h1>5. 骨髓流式是否存在单克隆细胞</h1>
-            <label><input type="radio" name="q5" value="A"> A. 无</label>
-            <label><input type="radio" name="q5" value="B"> B. 存在髓系单克隆细胞</label>
+            <h1>5. 骨髓流式是否存在单克隆细胞？</h1>
+            <div class="vertical-options">
+                <label><input type="radio" name="q5" value="A"> A. 无</label>
+                <label><input type="radio" name="q5" value="B"> B. 存在髓系单克隆细胞</label>
+            </div>
             <div class="button-container">
                 <button type="button" class="nav-button" onclick="prevQuestion(5)">上一题</button>
                 <button type="button" class="nav-button" onclick="nextQuestion(5)">下一题</button>
@@ -293,7 +305,7 @@
 
         <!-- 问题6 -->
         <div class="question-container hidden" id="question6">
-            <h1>6. 是否伴有以下遗传学异常</h1>
+            <h1>6. 是否伴有以下遗传学异常？</h1>
             <div class="vertical-options">
                 <label><input type="radio" name="q6" value="A"> A. PML::RARA</label>
                 <label><input type="radio" name="q6" value="B"> B. RUNX1::RUNX1T1</label>
@@ -317,7 +329,7 @@
 
         <!-- 问题7 -->
         <div class="question-container hidden" id="question7">
-            <h1>7. 是否伴有一下情况（F不参与多选）</h1>
+            <h1>7. 是否伴有以下情况？</h1>
             <div class="vertical-options">
                 <label><input type="checkbox" name="q7a" value="A" onchange="handleQ7Selection()"> A. 年龄≥60岁</label>
                 <label><input type="checkbox" name="q7b" value="B" onchange="handleQ7Selection()"> B. WBC≥100×10^9/L</label>
@@ -334,7 +346,7 @@
 
         <!-- 问题8 -->
         <div class="question-container hidden" id="question8">
-            <h1>8. 是否伴有以下异常</h1>
+            <h1>8. 是否伴有以下异常？</h1>
             <div class="vertical-options">
                 <label><input type="radio" name="q8" value="A" onchange="handleQ8Selection()"> A. t(6;9)(p23;q34.1)/DEK::NUP214</label>
                 <label><input type="radio" name="q8" value="B" onchange="handleQ8Selection()"> B. t(v:11q23.3)/KMT2A重排</label>
@@ -356,7 +368,7 @@
 
         <!-- 问题9 -->
         <div class="question-container hidden" id="question9">
-            <h1>9. 是否伴有以下异常</h1>
+            <h1>9. 是否伴有以下异常？</h1>
             <div class="vertical-options">
                 <label><input type="checkbox" name="q9a" value="A"> A. inv(16)(p13q22)或t(16;16)(p13;q22)/CBFB::MYH11</label>
                 <label><input type="checkbox" name="q9b" value="B"> B. t(8;21)(q22;q22)/RUNX1::RUNX1T1</label>
@@ -369,13 +381,17 @@
             </div>
             <div class="button-container">
                 <button type="button" class="nav-button" onclick="prevQuestion(9)">上一题</button>
-                <button type="button" class="submit-button" onclick="nextQuestion(9)">提交</button>
+                <button type="button" class="nav-button" onclick="nextQuestion(9)">提交</button>
             </div>
         </div>
 
         <!-- 结果页面 -->
         <div class="question-container hidden" id="resultPage">
-            <div class="result-box" id="resultBox"></div>
+            <div class="result-box" id="resultBox">
+                <div class="diagnosis-title">诊断结果</div>
+                <div class="result-separator"></div>
+                <div class="result-text" id="resultText"></div>
+            </div>
             <p class="note">此诊断结果仅供参考，具体以医生诊断结果为准</p>
             <table class="explanation-table">
                 <thead>
@@ -388,7 +404,7 @@
                 </tbody>
             </table>
             <button id="restart-button" onclick="restartTest()">重新测试</button>
-            <p class="copyright">版权归属：宁夏人民医院血液科</p>
+            <p class="copyright">Copyright © 2025[宁夏回族自治区人民医院血液科]. All rights reserved</p>
         </div>
     </div>
 
@@ -511,7 +527,7 @@
             } else if (currentQuestion === 5) {
                 answers.q5 = document.querySelector('input[name="q5"]:checked').value;
 
-                // 判定 3题4题5题是否都选择”无“，如果是直接转跳到诊疗结果页面，显示诊断结果“无白血病”
+                // 判定 3题4题5题是否都选择”无“，如果是直接转跳到诊疗结果页面，显示诊断结果"无白血病"
                 if (answers.q3 === 'B' && answers.q4 === 'A' && answers.q5 === 'A') {
                     showResult('无白血病', 'blue');
                     return;
@@ -637,24 +653,9 @@
 
         // 显示结果
         function showResult(diagnosis, color = null) {
-            const resultBox = document.getElementById('resultBox');
-            resultBox.innerHTML = '';
-
-            // 添加诊断结果字段
-            const titleElement = document.createElement('div');
-            titleElement.className = 'diagnosis-title';
-            titleElement.textContent = '诊断结果';
-            resultBox.appendChild(titleElement);
-
-            // 添加横线，调整到黑色文字诊断结果和红色诊断结果中间
-            const separator = document.createElement('div');
-            separator.className = 'result-separator';
-            resultBox.appendChild(separator);
-
-            const resultText = document.createElement('p');
-            resultText.className = `result-text ${color? `result-${color.replace(' ', '')}` : ''}`;
+            const resultText = document.getElementById('resultText');
             resultText.innerHTML = diagnosis;
-            resultBox.appendChild(resultText);
+            resultText.className = `result-text ${color? `result-${color.replace(' ', '')}` : ''}`;
 
             // 添加到解释表格
             const explanationBody = document.getElementById('explanationBody');
@@ -711,7 +712,7 @@
             q6Diagnosis = '';
             document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
             document.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
-            document.getElementById('resultBox').innerHTML = '';
+            document.getElementById('resultText').innerHTML = '';
             document.getElementById('explanationBody').innerHTML = '';
             showQuestion('homepage');
         }
@@ -722,3 +723,8 @@
         }
 
         // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>
